@@ -9,7 +9,7 @@ summarization_controller = Blueprint('summarization_controller', __name__, url_p
 @summarization_controller.route('/extractive', methods=['POST'])
 def extractive():
     data = request.get_json()
-    text = data['text']
+    text = str(data['text'])
     top_n = int(data['top_n'])
     return lexrank.summarize_text(text, top_n, False)
 
@@ -17,5 +17,5 @@ def extractive():
 @summarization_controller.route('/abstractive', methods=['POST'])
 def abstractive():
     data = request.get_json()
-    text = data['text']
+    text = str(data['text'])
     return t5.summarize_text(text)
