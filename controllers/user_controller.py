@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_user
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from db_models import User, db
 
@@ -11,7 +11,7 @@ user_controller = Blueprint('user_controller', __name__, url_prefix='/user')
 def registration():
     data = request.get_json()
     if User.query.filter(User.email == str(data['email'])).first() != None:
-        return 'Пользователь с таким email же был зарегистрирован', 409
+        return 'Пользователь с таким email уже был зарегистрирован', 409
     new_user = User(
         username=str(data['username']),
         email=str(data['email']),
@@ -22,4 +22,18 @@ def registration():
     login_user(new_user)
     return {
         'username': new_user.username
+    }
+
+
+@user_controller.route('/authorization', methods=['POST'])
+def authorization():
+    data = request.get_json()
+    user = User.query.filter(User.email == str(data['email'])).first()
+    if user is None:
+        return 'Пользователя с таким email не существует', 400
+    elif not check_password_hash(user.password, str(data['password'])):
+        return 'Неправильный email или пароль', 400
+    login_user(user)
+    return {
+        'username': user.username
     }
