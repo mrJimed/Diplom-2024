@@ -1,7 +1,9 @@
 from flask import Flask
-from db_models import db
+from flask_login import LoginManager
 
 from controllers.summarization_controller import summarization_controller
+from controllers.user_controller import user_controller
+from db_models import db, User
 from settings import SECRET_KEY, DB_CONNECTION
 
 app = Flask(__name__)
@@ -9,8 +11,13 @@ app.secret_key = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNECTION
 
 app.register_blueprint(summarization_controller)
+app.register_blueprint(user_controller)
 
 db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.user_loader(lambda user_id: User.query.get(user_id))
+login_manager.init_app(app)
 
 if __name__ == '__main__':
     with app.app_context():
