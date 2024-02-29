@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from db_models import User, db
@@ -37,3 +37,10 @@ def authorization():
     return {
         'username': user.username
     }
+
+
+@login_required
+@user_controller.route('/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return '', 200
