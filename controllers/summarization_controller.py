@@ -18,4 +18,4 @@ def extractive():
 def abstractive():
     data = request.get_json()
     text = str(data['text'])
-    return t5.summarize_text(text)
+    return t5().summarize_text(text)
