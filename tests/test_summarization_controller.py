@@ -42,7 +42,7 @@ def test_abstractive(client):
     max_length = int(0.7 * text_length)
     min_length = int(0.4 * text_length)
 
-    response = client.post(URL, json=create_abstractive_data(text))
+    response = client.post(URL, json=create_abstractive_data(''))
     assert '' == response.data.decode('utf-8'), f'Отправляем по пути "{URL}" пустую строку'
 
     response = client.post(URL, json=create_abstractive_data(text))
