@@ -24,4 +24,4 @@ def get_summarized_text():
 @login_required
 def get_summarized_texts():
     summarized_texts = SummarizedText.query.filter(SummarizedText.user_id == current_user.id).all()
-    return jsonify([text.__dict__() for text in summarized_texts]), 200
+    return jsonify([text.serialize() for text in summarized_texts]), 200
