@@ -7,7 +7,7 @@ from db_models import User, db
 user_controller = Blueprint('user_controller', __name__, url_prefix='/user')
 
 
-@user_controller.route('/registration', methods=['POST'])
+@user_controller.post('/registration')
 def registration():
     data = request.get_json()
     if User.query.filter(User.email == str(data['email'])).first() != None:
@@ -25,7 +25,7 @@ def registration():
     }
 
 
-@user_controller.route('/authorization', methods=['POST'])
+@user_controller.post('/authorization')
 def authorization():
     data = request.get_json()
     user = User.query.filter(User.email == str(data['email'])).first()
@@ -39,7 +39,7 @@ def authorization():
     }
 
 
-@user_controller.route('/logout', methods=['POST'])
+@user_controller.post('/logout')
 @login_required
 def logout():
     logout_user()

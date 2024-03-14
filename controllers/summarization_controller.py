@@ -6,7 +6,7 @@ from summarization.extractive.lex_rank_summarizer import LexRankSummarizer as le
 summarization_controller = Blueprint('summarization_controller', __name__, url_prefix='/summarization')
 
 
-@summarization_controller.route('/extractive', methods=['POST'])
+@summarization_controller.post('/extractive')
 def extractive():
     data = request.get_json()
     text = str(data['text'])
@@ -14,7 +14,7 @@ def extractive():
     return lexrank.summarize_text(text, top_n, False)
 
 
-@summarization_controller.route('/abstractive', methods=['POST'])
+@summarization_controller.post('/abstractive')
 def abstractive():
     data = request.get_json()
     text = str(data['text'])

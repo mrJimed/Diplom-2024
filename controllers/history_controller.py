@@ -6,7 +6,7 @@ from db_models import SummarizedText, db
 history_controller = Blueprint('history_controller', __name__, url_prefix='/history')
 
 
-@history_controller.route('', methods=['POST'])
+@history_controller.post('')
 @login_required
 def get_summarized_text():
     data = request.get_json()
@@ -20,7 +20,7 @@ def get_summarized_text():
     return '', 200
 
 
-@history_controller.route('', methods=['GET'])
+@history_controller.get('')
 @login_required
 def get_summarized_texts():
     summarized_texts = SummarizedText.query.filter(SummarizedText.user_id == current_user.id).all()
