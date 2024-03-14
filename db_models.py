@@ -22,3 +22,12 @@ class SummarizedText(db.Model):
     text = db.Column(db.Text, nullable=False)
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('user.id'), nullable=False)
     create_ts = db.Column(db.TIMESTAMP, nullable=False, default=datetime.now)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'text': self.text,
+            'user_id': str(self.user_id),
+            'create_ts': self.create_ts.strftime("%Y-%m-%d %H:%M:%S")
+        }

@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 
+from controllers.history_controller import history_controller
 from controllers.summarization_controller import summarization_controller
 from controllers.user_controller import user_controller
 from db_models import db, User
@@ -12,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNECTION
 
 app.register_blueprint(summarization_controller)
 app.register_blueprint(user_controller)
+app.register_blueprint(history_controller)
 
 db.init_app(app)
 
