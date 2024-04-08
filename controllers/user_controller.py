@@ -2,7 +2,8 @@ from flask import Blueprint, request
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from db_models import User, db
+from database import db
+from db_models.user import User
 
 user_controller = Blueprint('user_controller', __name__, url_prefix='/user')
 

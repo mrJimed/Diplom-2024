@@ -4,7 +4,8 @@ from flask_login import LoginManager
 from controllers.history_controller import history_controller
 from controllers.summarization_controller import summarization_controller
 from controllers.user_controller import user_controller
-from db_models import db, User
+from database import db
+from db_models.user import User
 from settings import SECRET_KEY, DB_CONNECTION
 
 app = Flask(__name__)
