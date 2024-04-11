@@ -2,7 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 
 from controllers.history_controller import history_controller
-from controllers.summarization_controller import summarization_controller
+from controllers.annotation_controller import annotation_controller
 from controllers.user_controller import user_controller
 from database import db
 from db_models.user import User
@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNECTION
 
-app.register_blueprint(summarization_controller)
+app.register_blueprint(annotation_controller)
 app.register_blueprint(user_controller)
 app.register_blueprint(history_controller)
 
