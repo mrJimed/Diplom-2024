@@ -24,5 +24,6 @@ def get_summarized_text():
 @history_controller.get('')
 @login_required
 def get_summarized_texts():
-    summarized_texts = Annotation.query.filter(Annotation.user_id == current_user.id).all()
-    return jsonify([text.serialize() for text in summarized_texts]), 200
+    annotations = Annotation.query.filter(Annotation.user_id == current_user.id).all()
+    annotations = sorted(annotations, key=lambda annotation: annotation.create_ts, reverse=True)
+    return jsonify([annotation.serialize() for annotation in annotations]), 200
