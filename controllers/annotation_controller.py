@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from werkzeug.datastructures.file_storage import FileStorage
 
 from services import email_service
-from summarization.abstractive.t5_summarizer import T5Summarizer as t5
+from summarization.abstractive.bart_summarizer import BartSummarizer as bart
 from summarization.extractive.lex_rank_summarizer import LexRankSummarizer as lexrank
 
 annotation_controller = Blueprint('annotation_controller', __name__, url_prefix='/annotation')
@@ -32,8 +32,11 @@ def extractive():
 @annotation_controller.post('/abstractive')
 def abstractive():
     file = request.files['file']
+    max_length = int(request.form['maxLength'])/100
+    min_length = int(request.form['minLength'])/100
     text = get_file_content(file)
-    annotation = t5().summarize_text(text)
+    print(f'Abstractive summarization started (min_length={min_length}, max_length={max_length})')
+    annotation = bart().summarize_text(text, max_length=max_length, min_length=min_length)
 
     if request.form['isSendEmail'].lower() == 'true':
         to_email = request.form['toEmail']
