@@ -20,7 +20,7 @@ class BartSummarizer:
         output_ids = self._model.generate(
             max_length=max_tokens,
             input_ids=tokenized_text,
-            no_repeat_ngram_size=7,
+            no_repeat_ngram_size=4,
             num_beams=12,
             early_stopping=True,
             length_penalty=0.5,
