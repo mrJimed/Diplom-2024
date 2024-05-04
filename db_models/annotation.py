@@ -19,5 +19,5 @@ class Annotation(db.Model):
             'title': self.title,
             'text': self.text,
             'user_id': str(self.user_id),
-            'create_ts': self.create_ts.strftime("%H:%M:%S %d.%m.%Y ")
+            'create_ts': self.create_ts.strftime("%H:%M %d.%m.%Y ")
         }
